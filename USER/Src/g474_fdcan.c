@@ -1,3 +1,11 @@
+/*
+ * @Author: frozen-fire 2812643217@qq.com
+ * @Date: 2025-03-21 20:35:17
+ * @LastEditors: frozen-fire 2812643217@qq.com
+ * @LastEditTime: 2025-03-21 20:38:14
+ * @FilePath: \PSP_supercapacitor\USER\Src\g474_fdcan.c
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 #include "g474_fdcan.h"
 #include "dcdc.h"
 #include "cap_canmsg_protocal.h"
@@ -129,5 +137,5 @@ void send_capinfo(){
   float remaining_energy=(data.v_cap*data.v_cap-BAT_UVP_STARTUP_THRE*BAT_UVP_STARTUP_THRE);
   txmsg.cap_energy_percentage=(int)(100.0f*remaining_energy/all_energy);
   
-  fdcan2_transmit(CAPCAN_RXMSG_ID, FDCAN_DLC_BYTES_8, &txmsg);
+  fdcan2_transmit(CAPCAN_RXMSG_ID, FDCAN_DLC_BYTES_8, (uint8_t*)&txmsg);
 }
