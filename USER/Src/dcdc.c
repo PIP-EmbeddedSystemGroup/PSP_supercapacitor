@@ -14,7 +14,7 @@ float target_current=1.0f; //dcdc-current required due to power limit
 float total_allow_current=3.0f; //total-current required due to power limit
 float power_limit=50.0f; //power limit
 
-float discharge_maxi;
+float discharge_maxi;   //maximum discharge current allowed
 
 //WARNING: THIS FIRMWARE IS MADE FOR REV.2 VERSION !!!!!!!!!!
 //WARNING: THIS FIRMWARE IS MADE FOR REV.2 VERSION !!!!!!!!!!
@@ -267,6 +267,8 @@ __STATIC_INLINE void adc_value_conversion(void){
     return;
 }
 
+/// @brief 总线输入功率最大值更新函数
+/// @param limit 
 void dcdc_update_power_limit(float limit){
     if(limit<POWER_LIMIT_MINIMUM){
         limit=POWER_LIMIT_MINIMUM;
@@ -276,6 +278,9 @@ void dcdc_update_power_limit(float limit){
     power_limit=limit;
 }
 
+/// @brief DCDC主中断服务函数
+/// @note 该函数在HRTIM定时器中断中调用。请勿在其他地方调用。
+/// @param  void
 void dcdc_mainISR(void){
     HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
     adc_value_conversion();
@@ -305,7 +310,7 @@ void dcdc_mainISR(void){
         set_current=-discharge_maxi;
     }
 
-    HAL_IWDG_Refresh(&hiwdg);
+    HAL_IWDG_Refresh(&hiwdg);   //refresh watchdog
 
     HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
 

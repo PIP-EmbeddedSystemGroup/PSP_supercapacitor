@@ -1,3 +1,11 @@
+/*
+ * @Author: frozen-fire 2812643217@qq.com
+ * @Date: 2025-03-21 20:35:17
+ * @LastEditors: frozen-fire 2812643217@qq.com
+ * @LastEditTime: 2025-04-03 20:05:26
+ * @FilePath: \PSP_supercapacitor\USER\Inc\dcdc.h
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 #ifndef __DCDC__H
 #define __DCDC__H
 
@@ -17,7 +25,7 @@
 #define BUS_UVP_THRE 18.0f
 #define BUS_OVP_THRE 28.5f
 #define BAT_OVP_THRE 30.0f
-#define BAT_FULL_VOL 23.5f
+#define BAT_FULL_VOL 26.0f
 #define BAT_UVP_STARTUP_THRE 10.0f
 
 #define PROTECTION_RECOVERY_TIME 2000
@@ -36,7 +44,7 @@
 #define IMOTOR_CAL 0.89f
 #define ITOT_CAL 0.98f
 
-#define V_REF (3.27f)
+#define V_REF (3.00f)
 
 #define DT (1.0f/350000.0f)
 
@@ -53,13 +61,13 @@ typedef struct pwr_adc_t{
 #define VOFA_TAIL {0x00, 0x00, 0x80, 0x7f}
 typedef struct pwr_data_t
 {
-    float v_bus;
-    float v_cap;
-    float i_tot;
-    float i_dcdc;
-    float i_motor;
-    float i_allow;
-    float state;
+    float v_bus;    //总线电压
+    float v_cap;    //电容电压
+    float i_tot;    //总线输入电流
+    float i_dcdc;   //DCDC电流
+    float i_motor;  //负载电流
+    float i_allow;  //允许的电流
+    float state;   //工作状态
     unsigned char tail[4];
 }pwr_data_t;
 
